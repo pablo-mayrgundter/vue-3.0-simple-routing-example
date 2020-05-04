@@ -15,4 +15,4 @@ yarn dev
 yarn build
 ```
 
-For a detailed explanation of the build process, read the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+For a detailed explanation of the build process, read the [docs for vue-loader](https://vue-loader.vuejs.org/).
