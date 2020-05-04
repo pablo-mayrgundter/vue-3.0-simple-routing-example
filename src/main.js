@@ -1,24 +1,28 @@
-import Vue from 'vue'
+import { createApp, h } from 'vue'
 import routes from './routes'
 
-const app = new Vue({
-  el: '#app',
-  data: {
+const SimpleRouterApp = {
+  data: () => ({
     currentRoute: window.location.pathname
-  },
+  }),
+
   computed: {
     ViewComponent () {
-      const matchingView = routes[this.currentRoute]
-      return matchingView
-        ? require('./pages/' + matchingView + '.vue')
-        : require('./pages/404.vue')
+      const matchingPage = routes[this.currentRoute] || '404'
+      return require(`./pages/${matchingPage}.vue`).default
     }
   },
-  render (h) {
-    return h(this.ViewComponent)
-  }
-})
 
-window.addEventListener('popstate', () => {
-  app.currentRoute = window.location.pathname
-})
+  render () {
+    return h(this.ViewComponent)
+  },
+
+  created () {
+    window.addEventListener('popstate', () => {
+      this.currentRoute = window.location.pathname
+    })
+  }
+}
+
+createApp(SimpleRouterApp).mount('#app')
+

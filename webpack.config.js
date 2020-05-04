@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+var VueLoaderPlugin = require('vue-loader').VueLoaderPlugin
 
 module.exports = {
   entry: './src/main.js',
@@ -7,6 +8,9 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
     filename: 'build.js'
+  },
+  performance: {
+    hints: false
   },
   module: {
     rules: [
@@ -27,30 +31,15 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm-bundler.js'
     }
   },
   devServer: {
     historyApiFallback: true,
     noInfo: true
   },
-  devtool: '#eval-source-map'
-}
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.optimize.OccurrenceOrderPlugin()
-  ])
+  devtool: '#eval-source-map',
+  plugins: [
+    new VueLoaderPlugin()
+  ]
 }
