@@ -1,28 +1,29 @@
-import { createApp, h } from 'vue'
+import { createApp, h, markRaw } from 'vue'
+import page from 'page'
 import routes from './routes'
+
+const DefaultComponent = markRaw({
+  render: () => h('div', 'Loading…')
+})
 
 const SimpleRouterApp = {
   data: () => ({
-    currentRoute: window.location.pathname
+    ViewComponent: null
   }),
 
-  computed: {
-    ViewComponent () {
-      const matchingPage = routes[this.currentRoute] || '404'
-      return require(`./pages/${matchingPage}.vue`).default
-    }
-  },
-
   render () {
-    return h(this.ViewComponent)
+    return h(this.ViewComponent || DefaultComponent)
   },
 
   created () {
-    window.addEventListener('popstate', () => {
-      this.currentRoute = window.location.pathname
-    })
+    for (let route in routes) {
+      page(route, () => {
+        this.ViewComponent = markRaw(require('./pages/' + routes[route] + '.vue').default)
+      })
+    }
+
+    page()
   }
 }
 
 createApp(SimpleRouterApp).mount('#app')
-
