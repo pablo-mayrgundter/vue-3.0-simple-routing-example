@@ -1,6 +1,5 @@
-var path = require('path')
-var webpack = require('webpack')
-var VueLoaderPlugin = require('vue-loader').VueLoaderPlugin
+const path = require('path')
+const VueLoaderPlugin = require('vue-loader').VueLoaderPlugin
 
 module.exports = {
   entry: './src/main.js',
