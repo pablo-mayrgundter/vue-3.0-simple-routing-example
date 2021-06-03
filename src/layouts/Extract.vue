@@ -1,5 +1,5 @@
 <template>
-  <h1>Main</h1>
+  <h1>Extract</h1>
   <ul>
     <li><v-link href="/">Home</v-link></li>
     <li><v-link href="/project">Project</v-link></li>

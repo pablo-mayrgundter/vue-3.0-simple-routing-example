@@ -1,4 +1,5 @@
 import { createApp, h } from 'vue'
+import CoordsForm from './components/coords/CoordsForm.vue';
 import routes from './routes'
 
 const SimpleRouterApp = {
@@ -8,8 +9,8 @@ const SimpleRouterApp = {
 
   computed: {
     ViewComponent () {
-      const matchingPage = routes[this.currentRoute] || '404'
-      return require(`./pages/${matchingPage}.vue`).default
+      const matchingPage = routes[this.currentRoute] || '404';
+      return require(`./pages/${matchingPage}.vue`).default;
     }
   },
 
@@ -24,5 +25,7 @@ const SimpleRouterApp = {
   }
 }
 
-createApp(SimpleRouterApp).mount('#app')
+const app = createApp(SimpleRouterApp);
+app.component(CoordsForm);
+app.mount('#app');
 
